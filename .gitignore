@@ -1,0 +1,7 @@
+.*.sw?
+*.py?
+bin/
+lib/
+include/
+*.xml
+.Python
