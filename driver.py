@@ -22,11 +22,14 @@ def main():
         if os.path.exists(output):
             print >> sys.stderr, "ERROR: Output file already exists"
             exit(1)
-    cmd = args[0]
-    if len(args) > 1:
+    if len(args) == 0:
+        print "Choose a command: diff, cleanup, filter"
+        exit(1)
+    elif len(args) > 1:
         cmd_args = args[1:]
     else:
         cmd_args = None
+    cmd = args[0]
     if cmd == 'diff':
         if len(cmd_args) != 2:
             print >> sys.stderr, "ERROR: must specify exactly two arguments (left and right)"
