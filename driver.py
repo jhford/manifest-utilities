@@ -3,6 +3,7 @@
 from diff import diff
 from filter import filter
 from cleanup import cleanup
+from freeze import freeze
 import optparse
 import os
 import sys
@@ -13,6 +14,7 @@ def main():
     parser.add_option("--diff", "-d", dest="diff", action="store_false", default=True)
     parser.add_option("--format", dest="out_format", default="report")
     parser.add_option("--output", dest="output", default=None)
+    parser.add_option("--root", dest="root", default=os.getcwd())
     options, args = parser.parse_args()
 
     if not options.output:
@@ -35,6 +37,12 @@ def main():
             print >> sys.stderr, "ERROR: must specify exactly two arguments (left and right)"
             exit(1)
         diff(cmd_args[0], cmd_args[1], output=output, output_format=options.out_format, filters=options.filters)
+    elif cmd == 'freeze':
+        freeze(cmd_args[0], output, options.root,
+               gaia_branch='v1-train',
+               gecko_branch='gecko-18',
+               moz_remotes=['b2g'],
+               moz_branch='v1-train')
     elif cmd == 'cleanup':
         if len(cmd_args) != 1:
             print >> sys.stderr, "ERROR: you can only filter one file at a time"
